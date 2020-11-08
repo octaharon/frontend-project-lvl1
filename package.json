@@ -1,0 +1,20 @@
+{
+  "name": "@hexlet/code",
+  "version": "0.0.1",
+  "description": "Hexlet Frontend Project #1",
+  "main": "bin/brain-games.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/octaharon/frontend-project-lvl1.git"
+  },
+  "author": "Alexander Uskov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/octaharon/frontend-project-lvl1/issues"
+  },
+  "homepage": "https://github.com/octaharon/frontend-project-lvl1#readme"
+}
