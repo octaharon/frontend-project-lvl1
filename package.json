@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "Hexlet Frontend Project #1",
   "main": "bin/brain-games.js",
+  "bin": {
+    "brain-games": "bin/brain-games.js",
+    "brain-even": "bin/brain-even.js"
+  },
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
