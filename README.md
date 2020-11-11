@@ -7,5 +7,8 @@
 ### ESLint / Github Actions badge
 ![Run ESLint on Push/PR](https://github.com/octaharon/frontend-project-lvl1/workflows/Run%20ESLint%20on%20Push/PR/badge.svg)
 
-### Brain-even screencast
+### Installation and `brain-even` game
 [![asciicast](https://asciinema.org/a/372142.svg)](https://asciinema.org/a/372142)
+
+### `brain-calc` game
+[![asciicast](https://asciinema.org/a/372258.svg)](https://asciinema.org/a/372258)
