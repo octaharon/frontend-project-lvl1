@@ -1,4 +1,4 @@
-#Synopsis
+# Synopsis
 
 This is the first educational assessment project by [Hexlet](https://hexlet.io) for the Frontend Developer profession. The concept is to create a set of console-run mathematical games, that I humbly augmented with certain tweaks to make it not only educational but somewhat challenging as well. 
 
