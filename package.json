@@ -3,11 +3,15 @@
   "version": "0.0.1",
   "description": "Hexlet Frontend Project #1",
   "main": "bin/brain-games.js",
+  "engines": {
+    "node": ">=13"
+  },
   "bin": {
     "brain-games": "bin/brain-games.js",
     "brain-even": "bin/brain-even.js",
     "brain-calc": "bin/brain-calc.js",
-    "brain-gcd": "bin/brain-gcd.js"
+    "brain-gcd": "bin/brain-gcd.js",
+    "brain-progression": "bin/brain-progression.js"
   },
   "type": "module",
   "scripts": {
