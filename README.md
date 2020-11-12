@@ -35,3 +35,7 @@ sudo npm link
 ### `brain-progression` game
 **The player should fill in the gap in an arithmetic progression**
 [![asciicast](https://asciinema.org/a/372310.svg)](https://asciinema.org/a/372310)
+
+### `brain-prime` game
+**The player should tell whether the given number is prime**
+[![asciicast](https://asciinema.org/a/372405.svg)](https://asciinema.org/a/372405)

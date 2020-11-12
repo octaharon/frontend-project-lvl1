@@ -2,11 +2,12 @@
 import { game } from '../src/index.js';
 
 // I wish I could use an object here
-const operators = ['+', '-', '*'];
+const operators = ['+', '-', '*', 'mod'];
 const operatorResolutions = [
   (a, b) => a + b,
   (a, b) => a - b,
   (a, b) => a * b,
+  (a, b) => a % b,
 ];
 (async () => {
   const questions = [];
