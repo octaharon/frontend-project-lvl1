@@ -35,7 +35,7 @@ export const createQuestions = (
   numQuestions = DEFAULT_QUESTIONS,
   maxNumber = DEFAULT_MAX_NUMBER,
 ) => {
-  if (!Array.isArray(primeIndex) || !primeIndex.length < maxNumber) {
+  if (!Array.isArray(primeIndex) || primeIndex.length < maxNumber) {
     primeIndex = fillSieve(maxNumber);
   }
   const questions = [];
