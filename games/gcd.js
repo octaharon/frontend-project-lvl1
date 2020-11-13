@@ -1,5 +1,7 @@
+import { DEFAULT_QUESTIONS } from '../src/index.js';
+import { coinToss, easingFunction, generateRandomNumber } from '../src/utils.js';
+
 const DEFAULT_MAX_ANSWER = 50;
-const DEFAULT_QUESTIONS = 3;
 
 export const gameIntro = 'Find the greatest common divisor of given numbers.';
 
@@ -16,13 +18,14 @@ const coprimeBranches = [
 ];
 
 const generateCorpimeNumbers = (iterations = 3) => {
-  let pair = Math.random() > 0.5 ? [3, 1] : [2, 1];
+  let pair = coinToss() ? [3, 1] : [2, 1];
   if (!Number.isFinite(iterations) || iterations <= 1) return pair;
   for (let i = 0; i < iterations; i += 1) {
-    const branch = coprimeBranches[Math.floor(Math.random() * coprimeBranches.length)];
+    const branch = coprimeBranches[generateRandomNumber(0, coprimeBranches.length - 1)];
     pair = branch(pair[0], pair[1]);
   }
-  return Math.random() > 0.5 ? pair : pair.reverse();
+  // since by design first number is always greater than the second
+  return coinToss() ? pair : pair.reverse();
 };
 
 export const createQuestions = (
@@ -31,9 +34,10 @@ export const createQuestions = (
 ) => {
   const questions = [];
   for (let i = 0; i < numQuestions; i += 1) {
-    const gcd = Math.ceil(Math.random() * maxNumber);
+    const gcd = generateRandomNumber(1, maxNumber);
     // the bigger the GCD is, the lesser values generated are, to reduce game difficulty
-    const iterations = Math.round((1 - gcd / maxNumber) * 2 + 1);
+    // exponential smoothing is used to compensate for faster growth at bigger numbers
+    const iterations = easingFunction(1 - gcd / maxNumber, 0, 2, 0.25);
     const [mult1, mult2] = generateCorpimeNumbers(iterations);
     questions.push([`${mult1 * gcd} ${mult2 * gcd}`, gcd]);
   }

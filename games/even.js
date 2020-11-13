@@ -1,5 +1,7 @@
+import { DEFAULT_QUESTIONS } from '../src/index.js';
+import { generateRandomNumber, isEven } from '../src/utils.js';
+
 const DEFAULT_MAX_NUMBER = 100;
-const DEFAULT_QUESTIONS = 3;
 
 export const gameIntro = 'Answer "yes" if the number is even, otherwise answer "no".';
 
@@ -9,9 +11,8 @@ export const createQuestions = (
 ) => {
   const questions = [];
   for (let i = 0; i < numQuestions; i += 1) {
-    const number = Math.round(Math.random() * maxNumber);
-    const isEven = number % 2 === 0;
-    const answerExpected = isEven ? 'yes' : 'no';
+    const number = generateRandomNumber(0, maxNumber);
+    const answerExpected = isEven(number) ? 'yes' : 'no';
     questions.push([number, answerExpected]);
   }
   return questions;

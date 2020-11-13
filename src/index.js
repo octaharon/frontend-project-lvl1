@@ -1,5 +1,7 @@
 import { greeting, message, prompt } from './cli.js';
 
+export const DEFAULT_QUESTIONS = 3;
+
 /**
  * @param question The current question
  * @param correctAnswer Expected answer

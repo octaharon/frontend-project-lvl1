@@ -1,5 +1,7 @@
+import { DEFAULT_QUESTIONS } from '../src/index.js';
+import { generateRandomNumber } from '../src/utils.js';
+
 const DEFAULT_MAX_NUMBER = 150;
-const DEFAULT_QUESTIONS = 3;
 
 export const gameIntro = 'Answer "yes" if given number is prime. Otherwise answer "no".';
 
@@ -40,7 +42,7 @@ export const createQuestions = (
   }
   const questions = [];
   for (let i = 0; i < numQuestions; i += 1) {
-    const value = Math.floor(Math.random() * (maxNumber - 1) + 1);
+    const value = generateRandomNumber(1, maxNumber);
     const answer = isPrime(value) ? 'yes' : 'no';
     questions.push([value, answer]);
   }

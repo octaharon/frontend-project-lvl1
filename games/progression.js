@@ -1,12 +1,19 @@
+import { DEFAULT_QUESTIONS } from '../src/index.js';
+import { coinToss, generateRandomNumber } from '../src/utils.js';
+
 const DEFAULT_MAX_FIRST_VALUE = 20;
-const DEFAULT_QUESTIONS = 3;
 const DEFAULT_PROGRESSION_MAX_LENGTH = 10;
 const DEFAULT_PROGRESSION_MIN_LENGTH = 5;
+const MIN_FILLER_OFFSET = 1;
 
 export const gameIntro = 'What number is missing in the progression?';
 
 const generateProgression = (firstValue, delta, length = DEFAULT_PROGRESSION_MIN_LENGTH) => {
-  if (!Number.isFinite(firstValue) || !Number.isFinite(delta) || !Number.isFinite(length) || length < 5) throw new Error('Can\'t generate progression with given settings');
+  if (!Number.isFinite(firstValue)
+      || !Number.isFinite(delta)
+      || !Number.isFinite(length) || length < DEFAULT_PROGRESSION_MIN_LENGTH) {
+    throw new Error('Can\'t generate progression with given settings');
+  }
   let value = firstValue;
   const arr = [value];
   for (let i = 1; i < length; i += 1) {
@@ -22,18 +29,18 @@ export const createQuestions = (
 ) => {
   const questions = [];
   for (let i = 0; i < numQuestions; i += 1) {
-    const firstValue = Math.round(
-      Math.random() * 2 * maxNumber - maxNumber,
-    );
+    const firstValue = generateRandomNumber(-maxNumber, maxNumber);
+    let deltaSign = Math.sign(firstValue) * -1;
+    if (deltaSign === 0) deltaSign = coinToss() ? -1 : 1;
     const progression = generateProgression(
       firstValue,
-      Math.ceil(Math.random() * Math.abs(maxNumber)) * Math.sign(firstValue) * -1,
-      Math.round(
-        DEFAULT_PROGRESSION_MIN_LENGTH
-          + Math.random() * (DEFAULT_PROGRESSION_MAX_LENGTH - DEFAULT_PROGRESSION_MIN_LENGTH),
-      ),
+      generateRandomNumber(1, Math.abs(maxNumber)) * deltaSign,
+      generateRandomNumber(DEFAULT_PROGRESSION_MIN_LENGTH, DEFAULT_PROGRESSION_MAX_LENGTH),
     );
-    const index = 1 + Math.floor(Math.random() * (progression.length - 2));
+    const index = generateRandomNumber(
+      MIN_FILLER_OFFSET,
+      progression.length - 1 - MIN_FILLER_OFFSET,
+    );
     const value = progression[index];
     progression[index] = '..';
     questions.push([progression.join(' '), value]);

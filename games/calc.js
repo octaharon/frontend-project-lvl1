@@ -1,3 +1,6 @@
+import { DEFAULT_QUESTIONS } from '../src/index.js';
+import { generateRandomNumber } from '../src/utils.js';
+
 // I wish I could use an object here
 const operators = ['+', '-', '*', 'mod'];
 const operatorResolutions = [
@@ -8,7 +11,6 @@ const operatorResolutions = [
 ];
 
 const DEFAULT_MAX_NUMBER = 25;
-const DEFAULT_QUESTIONS = 3;
 
 export const gameIntro = 'What is the result of the expression?';
 
@@ -18,9 +20,9 @@ export const createQuestions = (
 ) => {
   const questions = [];
   for (let i = 0; i < numQuestions; i += 1) {
-    const operand1 = Math.round(Math.random() * maxNumber);
-    const operand2 = Math.round(Math.random() * maxNumber);
-    const op = Math.floor(Math.random() * operators.length);
+    const operand1 = generateRandomNumber(0, maxNumber);
+    const operand2 = generateRandomNumber(0, maxNumber);
+    const op = generateRandomNumber(0, operators.length - 1);
     const answerExpected = operatorResolutions[op](operand1, operand2);
     questions.push([`${operand1} ${operators[op]} ${operand2}`, answerExpected]);
   }
