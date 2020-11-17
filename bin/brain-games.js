@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-import { greeting, message } from '../src/cli.js';
+import { pickGame } from '../games/index.js';
 
-message();
-greeting().catch(console.error);
+pickGame().catch(console.error);

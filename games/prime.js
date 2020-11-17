@@ -22,24 +22,28 @@ const fillSieve = (maxIndex) => {
   return arr;
 };
 
-let primeIndex = null;
-
 const isPrime = (n) => {
   if (!Number.isFinite(n) || n <= 1) return false;
-  if (n < primeIndex.length) return primeIndex[n];
+  if (!Array.isArray(isPrime.primeIndex) || isPrime.primeIndex.length < DEFAULT_MAX_NUMBER) {
+    isPrime.primeIndex = fillSieve(DEFAULT_MAX_NUMBER);
+  }
+  if (n < isPrime.primeIndex.length) return isPrime.primeIndex[n];
   const sqrt = Math.sqrt(n);
   // fallback mechanics for larger numbers
   for (let i = 2; i <= sqrt; i += 1) if (n % i === 0) return false;
   return true;
 };
 
+/**
+ * @param {Number} numQuestions amount of questions to create
+ * @param {Number} maxNumber maximum generated number in question
+ * @returns {Array<Array<string,string>>} An array of tuples [question, answer]
+ */
 export const createQuestions = (
-  numQuestions = DEFAULT_QUESTIONS,
+  numQuestions,
   maxNumber = DEFAULT_MAX_NUMBER,
 ) => {
-  if (!Array.isArray(primeIndex) || primeIndex.length < maxNumber) {
-    primeIndex = fillSieve(maxNumber);
-  }
+  if (!Number.isFinite(numQuestions) || numQuestions <= 0) throw new Error('Questions count should be a positive integer');
   const questions = [];
   for (let i = 0; i < numQuestions; i += 1) {
     const value = generateRandomNumber(1, maxNumber);
@@ -49,9 +53,12 @@ export const createQuestions = (
   return questions;
 };
 
-export const createGame = (
-  numQuestions = DEFAULT_QUESTIONS,
-  maxNumber = DEFAULT_MAX_NUMBER,
-) => [gameIntro, createQuestions(numQuestions, maxNumber)];
+/**
+ * @returns {Array<String,Array<String,String>>} Game [title,<question,answer>[]]
+ */
+export const createGame = () => [
+  gameIntro,
+  createQuestions(DEFAULT_QUESTIONS, DEFAULT_MAX_NUMBER),
+];
 
 export default createGame;

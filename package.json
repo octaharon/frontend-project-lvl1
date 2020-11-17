@@ -1,6 +1,6 @@
 {
   "name": "@hexlet/code",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Hexlet Frontend Project #1",
   "main": "bin/brain-games.js",
   "engines": {
@@ -28,10 +28,12 @@
     "url": "https://github.com/octaharon/frontend-project-lvl1/issues"
   },
   "homepage": "https://github.com/octaharon/frontend-project-lvl1#readme",
-  "dependencies": {
+  "devDependencies": {
     "eslint": "^7.13.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-import": "^2.22.1"
+  },
+  "dependencies": {
     "promptly": "^3.2.0"
   }
 }

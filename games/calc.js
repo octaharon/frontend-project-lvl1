@@ -1,37 +1,45 @@
 import { DEFAULT_QUESTIONS } from '../src/index.js';
 import { generateRandomNumber } from '../src/utils.js';
 
-// I wish I could use an object here
-const operators = ['+', '-', '*', 'mod'];
-const operatorResolutions = [
-  (a, b) => a + b,
-  (a, b) => a - b,
-  (a, b) => a * b,
-  (a, b) => a % b,
+const operators = [
+  ['+', (a, b) => a + b],
+  ['-', (a, b) => a - b],
+  ['*', (a, b) => a * b],
+  ['mod', (a, b) => a % b],
 ];
 
 const DEFAULT_MAX_NUMBER = 25;
 
 export const gameIntro = 'What is the result of the expression?';
 
+/**
+ * @param {Number} numQuestions amount of questions to create
+ * @param {Number} maxNumber maximum operand value
+ * @returns {Array<Array<string,string>>} An array of tuples [question, answer]
+ */
 export const createQuestions = (
-  numQuestions = DEFAULT_QUESTIONS,
+  numQuestions,
   maxNumber = DEFAULT_MAX_NUMBER,
 ) => {
+  if (!Number.isFinite(numQuestions) || numQuestions <= 0) throw new Error('Questions count should be a positive integer');
   const questions = [];
   for (let i = 0; i < numQuestions; i += 1) {
     const operand1 = generateRandomNumber(0, maxNumber);
     const operand2 = generateRandomNumber(0, maxNumber);
     const op = generateRandomNumber(0, operators.length - 1);
-    const answerExpected = operatorResolutions[op](operand1, operand2);
-    questions.push([`${operand1} ${operators[op]} ${operand2}`, answerExpected]);
+    const answerExpected = operators[op][1](operand1, operand2);
+    const question = `${operand1} ${operators[op][0]} ${operand2}`;
+    questions.push([question, answerExpected]);
   }
   return questions;
 };
 
-export const createGame = (
-  numQuestions = DEFAULT_QUESTIONS,
-  maxNumber = DEFAULT_MAX_NUMBER,
-) => [gameIntro, createQuestions(numQuestions, maxNumber)];
+/**
+ * @returns {Array<String,Array<String,String>>} Game [title,<question,answer>[]]
+ */
+export const createGame = () => [
+  gameIntro,
+  createQuestions(DEFAULT_QUESTIONS, DEFAULT_MAX_NUMBER),
+];
 
 export default createGame;

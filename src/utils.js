@@ -22,14 +22,14 @@ export const generateRandomNumber = (min = 0, max = 1) => {
 export const coinToss = () => Math.random() > 0.5;
 
 /**
- * An exponential integer mapping function
+ * An exponential integer easing function
  * @param t 0<=t<=1
  * @param min f(0)
  * @param max f(1)
  * @param power smoothing exponent
  * @returns {number}
  */
-export const easingFunction = (
+export const smoothValue = (
   t,
   min = 0,
   max = 1,

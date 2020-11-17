@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 import { createGame } from '../games/progression.js';
-import { game } from '../src/index.js';
+import { runGame } from '../src/index.js';
 
-(async () => {
-  await game(...createGame());
-})().catch(console.error);
+runGame(createGame()).catch(console.error);

@@ -14,19 +14,23 @@ const generateProgression = (firstValue, delta, length = DEFAULT_PROGRESSION_MIN
       || !Number.isFinite(length) || length < DEFAULT_PROGRESSION_MIN_LENGTH) {
     throw new Error('Can\'t generate progression with given settings');
   }
-  let value = firstValue;
-  const arr = [value];
-  for (let i = 1; i < length; i += 1) {
-    value += delta;
-    arr.push(value);
+  const arr = [];
+  for (let i = 0; i < length; i += 1) {
+    arr[i] = firstValue + i * delta;
   }
   return arr;
 };
 
+/**
+ * @param {Number} numQuestions amount of questions to create
+ * @param {Number} maxNumber maximum value of a first progression member
+ * @returns {Array<Array<string,string>>} An array of tuples [question, answer]
+ */
 export const createQuestions = (
-  numQuestions = DEFAULT_QUESTIONS,
+  numQuestions,
   maxNumber = DEFAULT_MAX_FIRST_VALUE,
 ) => {
+  if (!Number.isFinite(numQuestions) || numQuestions <= 0) throw new Error('Questions count should be a positive integer');
   const questions = [];
   for (let i = 0; i < numQuestions; i += 1) {
     const firstValue = generateRandomNumber(-maxNumber, maxNumber);
@@ -48,9 +52,12 @@ export const createQuestions = (
   return questions;
 };
 
-export const createGame = (
-  numQuestions = DEFAULT_QUESTIONS,
-  maxNumber = DEFAULT_MAX_FIRST_VALUE,
-) => [gameIntro, createQuestions(numQuestions, maxNumber)];
+/**
+ * @returns {Array<String,Array<String,String>>} Game [title,<question,answer>[]]
+ */
+export const createGame = () => [
+  gameIntro,
+  createQuestions(DEFAULT_QUESTIONS, DEFAULT_MAX_FIRST_VALUE),
+];
 
 export default createGame;
