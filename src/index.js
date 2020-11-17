@@ -36,15 +36,15 @@ export const challengePlayer = async (question, correctAnswer) => {
 
 /**
  * @param {Game} game - A game definition [title,[question,answer][]]
- * @param {string} userName - String if not provided, it will be requested
+ * @param {string|null} userName - String if not provided, it will be requested
  * @param {boolean} skipGreeting - whether to skip welcome message
  * @returns {Promise<boolean>} Whether a game was won
  */
-export const runGame = async (game, userName, skipGreeting = false) => {
+export const runGame = async (game, userName = null, skipGreeting = false) => {
   const [title, challengeList] = game;
   if (!Array.isArray(challengeList) || !challengeList.length) throw new Error('Invalid challenge set is provided for a game');
   if (!skipGreeting) greet();
-  const uName = typeof userName === 'string' ? userName : await askName();
+  const uName = (userName !== null && typeof userName === 'string') ? userName : await askName();
   if (String(title).length) message(title);
   // eslint-disable-next-line no-restricted-syntax
   for (const challenge of challengeList) {

@@ -5,7 +5,7 @@ const operators = [
   ['+', (a, b) => a + b],
   ['-', (a, b) => a - b],
   ['*', (a, b) => a * b],
-  ['mod', (a, b) => a % b],
+//  ['mod', (a, b) => a % b],
 ];
 
 const DEFAULT_MAX_NUMBER = 25;
