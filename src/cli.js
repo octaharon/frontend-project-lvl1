@@ -12,6 +12,11 @@ export const askName = async () => {
   return name;
 };
 
+export const stubGame = () => {
+  greet();
+  return askName();
+};
+
 /**
  * @typedef ChoiceOption
  * @type {[string,any]}
