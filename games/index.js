@@ -9,6 +9,9 @@ import * as calc from './calc.js';
 import * as progression from './progression.js';
 import { runGame } from '../src/index.js';
 
+/**
+ * @type {ChoiceOption[]}
+ */
 const games = [
   ['Number parity', even.createGame],
   ['Calculations', calc.createGame],

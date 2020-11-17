@@ -13,8 +13,14 @@ export const askName = async () => {
 };
 
 /**
- * @param {String} title Choice description
- * @param {Array<String,any>} options a list of tuples [message, return value]
+ * @typedef ChoiceOption
+ * @type {[string,any]}
+ * @property {string} 0 - option text
+ * @property {any} 1 - option return value
+ */
+/**
+ * @param {string} title - Choice description
+ * @param {[ChoiceOption]} options - A list of tuples [message, return value]
  * @returns {Promise<*>}
  */
 export const selectOption = async (title, options) => {

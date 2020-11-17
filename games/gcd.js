@@ -29,9 +29,9 @@ const generateCorpimeNumbers = (iterations = 3) => {
 };
 
 /**
- * @param {Number} numQuestions amount of questions to create
- * @param {Number} maxNumber maximum possible common divisor
- * @returns {Array<Array<string,string>>} An array of tuples [question, answer]
+ * @param {Number} numQuestions - amount of questions to create
+ * @param {Number} maxNumber - maximum possible common divisor
+ * @returns {[Question]} An array of tuples [question, answer]
  */
 export const createQuestions = (
   numQuestions,
@@ -52,7 +52,7 @@ export const createQuestions = (
 };
 
 /**
- * @returns {Array<String,Array<String,String>>} Game [title,<question,answer>[]]
+ * @returns {Game} Game definition [title, [question,answer][]]
  */
 export const createGame = () => [
   gameIntro,

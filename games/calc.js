@@ -13,9 +13,9 @@ const DEFAULT_MAX_NUMBER = 25;
 export const gameIntro = 'What is the result of the expression?';
 
 /**
- * @param {Number} numQuestions amount of questions to create
- * @param {Number} maxNumber maximum operand value
- * @returns {Array<Array<string,string>>} An array of tuples [question, answer]
+ * @param {Number} numQuestions - amount of questions to create
+ * @param {Number} maxNumber - maximum operand value
+ * @returns {[Question]} An array of tuples [question, answer]
  */
 export const createQuestions = (
   numQuestions,
@@ -35,7 +35,7 @@ export const createQuestions = (
 };
 
 /**
- * @returns {Array<String,Array<String,String>>} Game [title,<question,answer>[]]
+ * @returns {Game} Game definition [title, [question,answer][]]
  */
 export const createGame = () => [
   gameIntro,

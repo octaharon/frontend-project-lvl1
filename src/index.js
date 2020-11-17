@@ -5,8 +5,8 @@ import {
 export const DEFAULT_QUESTIONS = 3;
 
 /**
- * @param question The current question
- * @param correctAnswer Expected answer (lowercased)
+ * @param {string} question - The question
+ * @param {string} correctAnswer - Expected answer (lowercased)
  * @returns {Promise<boolean>}
  */
 export const challengePlayer = async (question, correctAnswer) => {
@@ -21,12 +21,26 @@ export const challengePlayer = async (question, correctAnswer) => {
 };
 
 /**
- * @param {Array<String,Array<String,String>>} game [title,<question,answer>[]]
- * @param {String} userName String if not provided, it will be requested
- * @param {Boolean} skipGreeting whether to skip welcome message
+ * @typedef Question
+ * @type {[string,string]}
+ * @property {string} 0 - Question text
+ * @property {string} 1 - Expected answer
+ */
+
+/**
+ * @typedef Game
+ * @type {[string,Question[]]}
+ * @property {string} 0 - Game assignment text
+ * @property {[Question]} 1 - A list of questions and answers
+ */
+
+/**
+ * @param {Game} game - A game definition [title,[question,answer][]]
+ * @param {string} userName - String if not provided, it will be requested
+ * @param {boolean} skipGreeting - whether to skip welcome message
  * @returns {Promise<boolean>} Whether a game was won
  */
-export const runGame = async (game, userName = null, skipGreeting = false) => {
+export const runGame = async (game, userName, skipGreeting = false) => {
   const [title, challengeList] = game;
   if (!Array.isArray(challengeList) || !challengeList.length) throw new Error('Invalid challenge set is provided for a game');
   if (!skipGreeting) greet();

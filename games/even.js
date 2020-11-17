@@ -6,9 +6,9 @@ const DEFAULT_MAX_NUMBER = 100;
 export const gameIntro = 'Answer "yes" if the number is even, otherwise answer "no".';
 
 /**
- * @param {Number} numQuestions amount of questions to create
- * @param {Number} maxNumber maximum value in question
- * @returns {Array<Array<string,string>>} An array of tuples [question, answer]
+ * @param {Number} numQuestions - amount of questions to create
+ * @param {Number} maxNumber - maximum value in question
+ * @returns {Question[]} An array of tuples [question, answer]
  */
 export const createQuestions = (
   numQuestions,
@@ -25,7 +25,7 @@ export const createQuestions = (
 };
 
 /**
- * @returns {Array<String,Array<String,String>>} Game [title,<question,answer>[]]
+ * @returns {Game} Game definition [title, [question,answer][]]
  */
 export const createGame = () => [
   gameIntro,

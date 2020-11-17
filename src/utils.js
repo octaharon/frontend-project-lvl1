@@ -1,14 +1,14 @@
 /**
  * Check whether the number is even or odd
- * @param num
- * @returns {boolean|boolean}
+ * @param {number} num - a value to check a parity off
+ * @returns {boolean}
  */
 export const isEven = (num) => Number.isFinite(num) && num % 2 === 0;
 
 /**
- * Generate a random value between min and max (inclusive)
- * @param min
- * @param max
+ * Generate a random value between min and max
+ * @param {number} min - Minimum value (inclusive)
+ * @param {number} max - Maximum value (inclusive)
  * @returns {number}
  */
 export const generateRandomNumber = (min = 0, max = 1) => {
@@ -17,17 +17,18 @@ export const generateRandomNumber = (min = 0, max = 1) => {
 };
 
 /**
- * Return 50% true/false
+ * Toss a coin
+ * @returns {boolean} 50/50 chance
  */
 export const coinToss = () => Math.random() > 0.5;
 
 /**
  * An exponential integer easing function
- * @param t 0<=t<=1
- * @param min f(0)
- * @param max f(1)
- * @param power smoothing exponent
- * @returns {number}
+ * @param {number} t -  0<=t<=1
+ * @param {number} min - f(0)
+ * @param {number} max - f(1)
+ * @param {number} power - smoothing exponent
+ * @returns {number} a smoothed value 0<=f(t)<=1
  */
 export const smoothValue = (
   t,
