@@ -2,7 +2,7 @@ import promptly from 'promptly';
 
 export const prompt = (msg) => promptly.prompt(msg);
 
-export const message = (msg) => console.info(msg);
+export const message = (msg) => console.log(msg);
 
 export const greet = () => message('Welcome to the Brain Games!');
 
