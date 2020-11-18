@@ -1,6 +1,6 @@
-import promptly from 'promptly';
+import readlineSync from 'readline-sync';
 
-export const prompt = (msg) => promptly.prompt(msg);
+export const prompt = (msg) => readlineSync.question(msg);
 
 export const message = (msg) => console.log(msg);
 
