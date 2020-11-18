@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-import { runGame } from '../src/index.js';
-import { createGame } from '../games/calc.js';
+import { runGame, getGame } from '../src/index.js';
 
-runGame(createGame()).catch(console.error);
+runGame(getGame('calc')).catch(console.error);

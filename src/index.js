@@ -1,6 +1,16 @@
-import {
-  greet, askName, message, prompt,
-} from './cli.js';
+import readlineSync from 'readline-sync';
+import { getGameGenerator } from '../games/index.js';
+
+export const prompt = (msg) => readlineSync.question(msg);
+
+export const message = (msg) => console.log(msg);
+
+export const askName = async () => {
+  const name = await prompt('May I have your name, please: ');
+  message(`Hello ${name}!`);
+  return name;
+};
+export const welcome = () => message('Welcome to the Brain Games!');
 
 export const DEFAULT_QUESTIONS = 3;
 
@@ -9,7 +19,7 @@ export const DEFAULT_QUESTIONS = 3;
  * @param {string} correctAnswer - Expected answer (lowercased)
  * @returns {Promise<boolean>}
  */
-export const challengePlayer = async (question, correctAnswer) => {
+const challengePlayer = async (question, correctAnswer) => {
   message(`Question: ${question}`);
   const response = String(await prompt('Your answer: ')).toLowerCase().trim();
   if (response === String(correctAnswer)) {
@@ -43,7 +53,7 @@ export const challengePlayer = async (question, correctAnswer) => {
 export const runGame = async (game, userName = null, skipGreeting = false) => {
   const [title, challengeList] = game;
   if (!Array.isArray(challengeList) || !challengeList.length) throw new Error('Invalid challenge set is provided for a game');
-  if (!skipGreeting) greet();
+  if (!skipGreeting) welcome();
   const uName = (userName !== null && typeof userName === 'string') ? userName : await askName();
   if (String(title).length) message(title);
   // eslint-disable-next-line no-restricted-syntax
@@ -58,3 +68,5 @@ export const runGame = async (game, userName = null, skipGreeting = false) => {
   message(`Congratulations, ${uName}!`);
   return true;
 };
+
+export const getGame = (gameId) => getGameGenerator(gameId)(DEFAULT_QUESTIONS);

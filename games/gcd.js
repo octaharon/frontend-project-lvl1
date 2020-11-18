@@ -1,4 +1,3 @@
-import { DEFAULT_QUESTIONS } from '../src/index.js';
 import { coinToss, smoothValue, generateRandomNumber } from '../src/utils.js';
 
 const DEFAULT_MAX_ANSWER = 50;
@@ -52,11 +51,12 @@ export const createQuestions = (
 };
 
 /**
+ * @param {Number} numQuestions - amount of questions in a game
  * @returns {Game} Game definition [title, [question,answer][]]
  */
-export const createGame = () => [
+export const createGame = (numQuestions) => [
   gameIntro,
-  createQuestions(DEFAULT_QUESTIONS, DEFAULT_MAX_ANSWER),
+  createQuestions(numQuestions, DEFAULT_MAX_ANSWER),
 ];
 
 export default createGame;

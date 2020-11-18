@@ -1,30 +1,23 @@
-import {
-  greet, askName, selectOption,
-} from '../src/cli.js';
-
 import * as gcd from './gcd.js';
 import * as prime from './prime.js';
 import * as even from './even.js';
 import * as calc from './calc.js';
 import * as progression from './progression.js';
-import { runGame } from '../src/index.js';
 
 /**
- * @type {ChoiceOption[]}
+ * @type {Object.<string,ChoiceOption>}
  */
-const games = [
-  ['Number parity', even.createGame],
-  ['Calculations', calc.createGame],
-  ['Greatest common divisor', gcd.createGame],
-  ['Progression', progression.createGame],
-  ['Prime numbers', prime.createGame],
-];
-
-export const pickGame = async () => {
-  greet();
-  const userName = await askName();
-  const gameDefinition = await selectOption('Please pick a game to play.', games);
-  await runGame(gameDefinition(), userName, true);
+export const games = {
+  even: ['Number parity', even.createGame],
+  calc: ['Calculations', calc.createGame],
+  gcd: ['Greatest common divisor', gcd.createGame],
+  progression: ['Arithmetic Progression', progression.createGame],
+  prime: ['Prime numbers', prime.createGame],
 };
 
-export default pickGame;
+export const getGameGenerator = (gameId) => {
+  if (!Object.keys(games).includes(gameId)) throw new Error("Can't find game named `gameId`");
+  return games[gameId][1];
+};
+
+export default games;

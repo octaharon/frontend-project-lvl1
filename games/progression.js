@@ -1,4 +1,3 @@
-import { DEFAULT_QUESTIONS } from '../src/index.js';
 import { coinToss, generateRandomNumber } from '../src/utils.js';
 
 const DEFAULT_MAX_FIRST_VALUE = 20;
@@ -53,11 +52,12 @@ export const createQuestions = (
 };
 
 /**
+ * @param {Number} numQuestions - amount of questions in a game
  * @returns {Game} Game definition [title, [question,answer][]]
  */
-export const createGame = () => [
+export const createGame = (numQuestions) => [
   gameIntro,
-  createQuestions(DEFAULT_QUESTIONS, DEFAULT_MAX_FIRST_VALUE),
+  createQuestions(numQuestions, DEFAULT_MAX_FIRST_VALUE),
 ];
 
 export default createGame;
