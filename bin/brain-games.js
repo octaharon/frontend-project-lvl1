@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-import stubGame from '../src/cli.js';
+import pickGame from '../src/choice.js';
 
-stubGame().catch(console.error);
+pickGame().catch(console.error);
