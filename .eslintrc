@@ -4,11 +4,11 @@
   ],
   "env": {
     "node": true,
-    "es6": true
+    "es2020": true
   },
   "parserOptions":
   {
-    "ecmaVersion": 2020,
+    "ecmaVersion": 11,
     "sourceType": "module"
   },
   "rules": {
