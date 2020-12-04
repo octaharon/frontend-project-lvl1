@@ -1,4 +1,4 @@
-/* eslint-disable-next-line */
+/* eslint-disable import/named */
 import path from 'path';
 import url from 'url';
 
