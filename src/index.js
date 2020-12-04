@@ -1,5 +1,5 @@
 import readlineSync from 'readline-sync';
-import { getGameGenerator } from '../games/index.js';
+import { WELCOME_MESSAGE } from './settings.js';
 
 export const prompt = (msg) => readlineSync.question(msg);
 
@@ -10,9 +10,7 @@ export const askName = async () => {
   message(`Hello ${name}!`);
   return name;
 };
-export const welcome = () => message('Welcome to the Brain Games!');
-
-export const DEFAULT_QUESTIONS = 3;
+export const welcome = () => message(WELCOME_MESSAGE);
 
 /**
  * @param {string} question - The question
@@ -31,17 +29,27 @@ const challengePlayer = async (question, correctAnswer) => {
 };
 
 /**
- * @typedef Question
- * @type {[string,string]}
+ * @typedef Challenge
+ * @type {Array}
  * @property {string} 0 - Question text
- * @property {string} 1 - Expected answer
+ * @property {string|number} 1 - Expected answer
  */
 
 /**
+ * Check if a challenge is correctly typed
+ * @param {Challenge} challenge
+ * @return {boolean}
+ */
+const validateChallenge = (challenge) => Array.isArray(challenge)
+    && challenge.length === 2
+    && (typeof challenge[0] === 'string')
+    && ((typeof challenge[1] === 'string') || (typeof challenge[1] === 'number'));
+
+/**
  * @typedef Game
- * @type {[string,Question[]]}
+ * @type {[string,Challenge[]]}
  * @property {string} 0 - Game assignment text
- * @property {[Question]} 1 - A list of questions and answers
+ * @property {[Challenge]} 1 - A list of questions and answers
  */
 
 /**
@@ -52,7 +60,13 @@ const challengePlayer = async (question, correctAnswer) => {
  */
 export const runGame = async (game, userName = null, skipGreeting = false) => {
   const [title, challengeList] = game;
-  if (!Array.isArray(challengeList) || !challengeList.length) throw new Error('Invalid challenge set is provided for a game');
+  if (
+    !Array.isArray(challengeList)
+      || !challengeList.length
+      || !challengeList.every(validateChallenge)
+  ) {
+    throw new Error(`Invalid challenge set is provided for a game: ${JSON.stringify(challengeList)}`);
+  }
   if (!skipGreeting) welcome();
   const uName = (userName !== null && typeof userName === 'string') ? userName : await askName();
   if (String(title).length) message(title);
@@ -68,5 +82,3 @@ export const runGame = async (game, userName = null, skipGreeting = false) => {
   message(`Congratulations, ${uName}!`);
   return true;
 };
-
-export const getGame = (gameId) => getGameGenerator(gameId)(DEFAULT_QUESTIONS);

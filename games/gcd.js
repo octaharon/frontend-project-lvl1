@@ -1,8 +1,10 @@
+import { DEFAULT_QUESTIONS } from '../src/settings.js';
 import { coinToss, smoothValue, generateRandomNumber } from '../src/utils.js';
 
 const DEFAULT_MAX_ANSWER = 50;
 
-export const gameIntro = 'Find the greatest common divisor of given numbers.';
+const gameIntro = 'Find the greatest common divisor of given numbers.';
+const gameName = 'Greatest Common Divisor';
 
 /**
  * instead of a factorization of random numbers we gonna generate random coprime pairs instead
@@ -30,33 +32,38 @@ const generateCorpimeNumbers = (iterations = 3) => {
 /**
  * @param {Number} numQuestions - amount of questions to create
  * @param {Number} maxNumber - maximum possible common divisor
- * @returns {[Question]} An array of tuples [question, answer]
+ * @returns {[Challenge]} An array of tuples [question, answer]
  */
-export const createQuestions = (
+const createChallenges = (
   numQuestions,
   maxNumber = DEFAULT_MAX_ANSWER,
 ) => {
   if (!Number.isFinite(numQuestions) || numQuestions <= 0) throw new Error('Questions count should be a positive integer');
-  const questions = [];
+  const challenges = [];
   for (let i = 0; i < numQuestions; i += 1) {
-    const gcd = generateRandomNumber(1, maxNumber);
+    const expectedAnswer = generateRandomNumber(1, maxNumber);
     // the bigger the GCD is, the lesser values generated are, to reduce game difficulty
     // exponential smoothing is used to compensate for faster growth at bigger numbers
-    const iterations = smoothValue(1 - gcd / maxNumber, 0, 2, 0.25);
-    const [mult1, mult2] = generateCorpimeNumbers(iterations);
-    const question = `${mult1 * gcd} ${mult2 * gcd}`;
-    questions.push([question, gcd]);
+    const iterations = smoothValue(1 - expectedAnswer / maxNumber, 0, 2, 0.25);
+    const [multiplier1, multiplier2] = generateCorpimeNumbers(iterations);
+    const question = `${multiplier1 * expectedAnswer} ${multiplier2 * expectedAnswer}`;
+    challenges.push([question, expectedAnswer]);
   }
-  return questions;
+  return challenges;
 };
 
 /**
  * @param {Number} numQuestions - amount of questions in a game
  * @returns {Game} Game definition [title, [question,answer][]]
  */
-export const createGame = (numQuestions) => [
+const createGame = (numQuestions = DEFAULT_QUESTIONS) => [
   gameIntro,
-  createQuestions(numQuestions, DEFAULT_MAX_ANSWER),
+  createChallenges(numQuestions, DEFAULT_MAX_ANSWER),
 ];
 
-export default createGame;
+export {
+  createGame,
+  createChallenges,
+  gameIntro,
+  gameName,
+};

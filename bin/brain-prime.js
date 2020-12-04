@@ -1,4 +1,5 @@
 #!/usr/bin/env node
-import { runGame, getGame } from '../src/index.js';
+import { createGame } from '../games/prime.js';
+import { runGame } from '../src/index.js';
 
-runGame(getGame('prime')).catch(console.error);
+runGame(createGame()).catch(console.error);

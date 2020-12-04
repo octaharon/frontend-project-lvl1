@@ -4,10 +4,12 @@
  * @property {string} 0 - option text
  * @property {any} 1 - option return value
  */
-import { games } from '../games/index.js';
+
+import { loadGames } from './gamesLoader.js';
 import {
-  message, welcome, prompt, askName, runGame, DEFAULT_QUESTIONS,
+  message, welcome, prompt, askName, runGame,
 } from './index.js';
+import { DEFAULT_QUESTIONS } from './settings.js';
 
 /**
  * @param {string} title - Choice description
@@ -33,9 +35,10 @@ const selectOption = async (title, options) => {
 const pickGame = async () => {
   welcome();
   const userName = await askName();
+  const gamesList = await loadGames();
   const gameDefinition = await selectOption(
     'Please pick a game to play.',
-    Object.values(games),
+    gamesList,
   );
   await runGame(gameDefinition(DEFAULT_QUESTIONS), userName, true);
 };

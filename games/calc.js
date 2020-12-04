@@ -1,6 +1,7 @@
+import { DEFAULT_QUESTIONS } from '../src/settings.js';
 import { generateRandomNumber } from '../src/utils.js';
 
-const operators = [
+const operations = [
   ['+', (a, b) => a + b],
   ['-', (a, b) => a - b],
   ['*', (a, b) => a * b],
@@ -9,14 +10,15 @@ const operators = [
 
 const DEFAULT_MAX_NUMBER = 25;
 
-export const gameIntro = 'What is the result of the expression?';
+const gameIntro = 'What is the result of the expression?';
+const gameName = 'Calculations';
 
 /**
  * @param {Number} numQuestions - amount of questions to create
  * @param {Number} maxNumber - maximum operand value
- * @returns {[Question]} An array of tuples [question, answer]
+ * @returns {[Challenge]} An array of tuples [question, answer]
  */
-export const createQuestions = (
+const createChallenges = (
   numQuestions,
   maxNumber = DEFAULT_MAX_NUMBER,
 ) => {
@@ -25,10 +27,11 @@ export const createQuestions = (
   for (let i = 0; i < numQuestions; i += 1) {
     const operand1 = generateRandomNumber(0, maxNumber);
     const operand2 = generateRandomNumber(0, maxNumber);
-    const op = generateRandomNumber(0, operators.length - 1);
-    const answerExpected = operators[op][1](operand1, operand2);
-    const question = `${operand1} ${operators[op][0]} ${operand2}`;
-    questions.push([question, answerExpected]);
+    const operationIndex = generateRandomNumber(0, operations.length - 1);
+    const [operator, operatorFunction] = operations[operationIndex];
+    const expectedAnswer = operatorFunction(operand1, operand2);
+    const question = `${operand1} ${operator} ${operand2}`;
+    questions.push([question, expectedAnswer]);
   }
   return questions;
 };
@@ -37,9 +40,14 @@ export const createQuestions = (
  * @param {Number} numQuestions - amount of questions in a game
  * @returns {Game} Game definition [title, [question,answer][]]
  */
-export const createGame = (numQuestions) => [
+const createGame = (numQuestions = DEFAULT_QUESTIONS) => [
   gameIntro,
-  createQuestions(numQuestions, DEFAULT_MAX_NUMBER),
+  createChallenges(numQuestions, DEFAULT_MAX_NUMBER),
 ];
 
-export default createGame;
+export {
+  createGame,
+  createChallenges,
+  gameIntro,
+  gameName,
+};

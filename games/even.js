@@ -1,35 +1,49 @@
-import { generateRandomNumber, isEven } from '../src/utils.js';
+import { DEFAULT_QUESTIONS } from '../src/settings.js';
+import { generateRandomNumber } from '../src/utils.js';
 
 const DEFAULT_MAX_NUMBER = 100;
 
-export const gameIntro = 'Answer "yes" if the number is even, otherwise answer "no".';
+const gameIntro = 'Answer "yes" if the number is even, otherwise answer "no".';
+const gameName = 'Number Parity';
+
+/**
+ * Check whether the number is even or odd
+ * @param {number} num - a value to check a parity off
+ * @returns {boolean}
+ */
+const isEven = (num) => Number.isFinite(num) && num % 2 === 0;
 
 /**
  * @param {Number} numQuestions - amount of questions to create
  * @param {Number} maxNumber - maximum value in question
- * @returns {Question[]} An array of tuples [question, answer]
+ * @returns {Challenge[]} An array of tuples [question, answer]
  */
-export const createQuestions = (
+const createChallenges = (
   numQuestions,
   maxNumber = DEFAULT_MAX_NUMBER,
 ) => {
   if (!Number.isFinite(numQuestions) || numQuestions <= 0) throw new Error('Questions count should be a positive integer');
-  const questions = [];
+  const challenges = [];
   for (let i = 0; i < numQuestions; i += 1) {
-    const number = generateRandomNumber(0, maxNumber);
-    const answerExpected = isEven(number) ? 'yes' : 'no';
-    questions.push([number, answerExpected]);
+    const question = generateRandomNumber(0, maxNumber);
+    const expectedAnswer = isEven(question) ? 'yes' : 'no';
+    challenges.push([question.toString(), expectedAnswer]);
   }
-  return questions;
+  return challenges;
 };
 
 /**
  * @param {Number} numQuestions - amount of questions in a game
  * @returns {Game} Game definition [title, [question,answer][]]
  */
-export const createGame = (numQuestions) => [
+const createGame = (numQuestions = DEFAULT_QUESTIONS) => [
   gameIntro,
-  createQuestions(numQuestions, DEFAULT_MAX_NUMBER),
+  createChallenges(numQuestions, DEFAULT_MAX_NUMBER),
 ];
 
-export default createGame;
+export {
+  createChallenges,
+  createGame,
+  gameIntro,
+  gameName,
+};

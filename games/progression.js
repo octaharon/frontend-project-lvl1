@@ -1,63 +1,97 @@
+import { DEFAULT_QUESTIONS } from '../src/settings.js';
 import { coinToss, generateRandomNumber } from '../src/utils.js';
 
 const DEFAULT_MAX_FIRST_VALUE = 20;
-const DEFAULT_PROGRESSION_MAX_LENGTH = 10;
-const DEFAULT_PROGRESSION_MIN_LENGTH = 5;
+const MAX_DELTA = 10;
+const PROGRESSION_MAX_LENGTH = 10;
+const PROGRESSION_MIN_LENGTH = 5;
 const MIN_FILLER_OFFSET = 1;
+const REPLACEMENT_STRING = '..';
 
-export const gameIntro = 'What number is missing in the progression?';
+const gameIntro = 'What number is missing in the progression?';
+const gameName = 'Arithmetic Progression';
 
-const generateProgression = (firstValue, delta, length = DEFAULT_PROGRESSION_MIN_LENGTH) => {
+/**
+ * Generates {length} members of an arithmetic progression,
+ * starting with {firstValue} and {delta} common difference
+ * @param {number} firstValue starting member of a progression
+ * @param {number} delta common difference
+ * @param {number} length amount of members to generate
+ * @returns {[]}
+ */
+const generateProgression = (firstValue, delta, length) => {
   if (!Number.isFinite(firstValue)
       || !Number.isFinite(delta)
-      || !Number.isFinite(length) || length < DEFAULT_PROGRESSION_MIN_LENGTH) {
+      || !Number.isFinite(length) || length < PROGRESSION_MIN_LENGTH) {
     throw new Error('Can\'t generate progression with given settings');
   }
-  const arr = [];
+  const progression = [];
   for (let i = 0; i < length; i += 1) {
-    arr[i] = firstValue + i * delta;
+    progression[i] = firstValue + i * delta;
   }
-  return arr;
+  return progression;
+};
+
+/**
+ * Generate a random adjusted sequence for a challenge
+ * @param maxFirstElement - maximum absolute value to seed a first element from
+ * @param maxDelta - maximum absolute value of a progression step to seed from
+ * @return {*[]}
+ */
+const generateSequence = (
+  maxFirstElement = DEFAULT_MAX_FIRST_VALUE,
+  maxDelta = MAX_DELTA,
+) => {
+  const isAscending = coinToss();
+  const hasPositiveFirstMember = coinToss();
+  const firstValue = generateRandomNumber(1, maxFirstElement) * (hasPositiveFirstMember ? 1 : -1);
+  const deltaValue = generateRandomNumber(1, maxDelta) * (isAscending ? 1 : -1);
+  const length = generateRandomNumber(
+    PROGRESSION_MIN_LENGTH,
+    PROGRESSION_MAX_LENGTH,
+  );
+  return generateProgression(firstValue, deltaValue, length);
 };
 
 /**
  * @param {Number} numQuestions - amount of questions to create
- * @param {Number} maxNumber - maximum value of a first progression member
- * @returns {[Question]} An array of tuples [question, answer]
+ * @param {Number} maxNumber - absolute maximum value of the first progression member
+ * @returns {[Challenge]} An array of tuples [question, answer]
  */
-export const createQuestions = (
+const createChallenges = (
   numQuestions,
   maxNumber = DEFAULT_MAX_FIRST_VALUE,
 ) => {
   if (!Number.isFinite(numQuestions) || numQuestions <= 0) throw new Error('Questions count should be a positive integer');
-  const questions = [];
+  if (!Number.isFinite(maxNumber) || maxNumber < 1) throw new Error('Progression scale should be 1 or greater');
+  const challenges = [];
   for (let i = 0; i < numQuestions; i += 1) {
-    const firstValue = generateRandomNumber(-maxNumber, maxNumber);
-    let deltaSign = Math.sign(firstValue) * -1;
-    if (deltaSign === 0) deltaSign = coinToss() ? -1 : 1;
-    const progression = generateProgression(
-      firstValue,
-      generateRandomNumber(1, Math.abs(maxNumber)) * deltaSign,
-      generateRandomNumber(DEFAULT_PROGRESSION_MIN_LENGTH, DEFAULT_PROGRESSION_MAX_LENGTH),
-    );
-    const index = generateRandomNumber(
+    const numberScaleFactor = maxNumber / DEFAULT_MAX_FIRST_VALUE;
+    const progression = generateSequence(maxNumber, numberScaleFactor * MAX_DELTA);
+    const replacementIndex = generateRandomNumber(
       MIN_FILLER_OFFSET,
       progression.length - 1 - MIN_FILLER_OFFSET,
     );
-    const value = progression[index];
-    progression[index] = '..';
-    questions.push([progression.join(' '), value]);
+    const expectedAnswer = progression[replacementIndex];
+    progression[replacementIndex] = REPLACEMENT_STRING;
+    const question = progression.join(' ');
+    challenges.push([question, expectedAnswer]);
   }
-  return questions;
+  return challenges;
 };
 
 /**
  * @param {Number} numQuestions - amount of questions in a game
  * @returns {Game} Game definition [title, [question,answer][]]
  */
-export const createGame = (numQuestions) => [
+const createGame = (numQuestions = DEFAULT_QUESTIONS) => [
   gameIntro,
-  createQuestions(numQuestions, DEFAULT_MAX_FIRST_VALUE),
+  createChallenges(numQuestions, DEFAULT_MAX_FIRST_VALUE),
 ];
 
-export default createGame;
+export {
+  createChallenges,
+  createGame,
+  gameIntro,
+  gameName,
+};

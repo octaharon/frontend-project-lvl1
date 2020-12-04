@@ -1,11 +1,4 @@
 /**
- * Check whether the number is even or odd
- * @param {number} num - a value to check a parity off
- * @returns {boolean}
- */
-export const isEven = (num) => Number.isFinite(num) && num % 2 === 0;
-
-/**
  * Generate a random value between min and max
  * @param {number} min - Minimum value (inclusive)
  * @param {number} max - Maximum value (inclusive)

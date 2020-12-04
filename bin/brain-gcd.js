@@ -1,4 +1,5 @@
 #!/usr/bin/env node
-import { runGame, getGame } from '../src/index.js';
+import { runGame } from '../src/index.js';
+import { createGame } from '../games/gcd.js';
 
-runGame(getGame('gcd')).catch(console.error);
+runGame(createGame()).catch(console.error);

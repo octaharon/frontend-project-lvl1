@@ -20,6 +20,11 @@ sudo npm link
 
 ## Games
 
+### Game menu
+Set environment `BRAIN_GAMES_MODE=menu` and run `brain-games`
+Otherwise `brain-games` runs a game intro stub 
+[![asciicast](https://asciinema.org/a/pMpHhG5HCHJM5OVgEqp8QDmCG.svg)](https://asciinema.org/a/pMpHhG5HCHJM5OVgEqp8QDmCG)
+
 ### `brain-even` game
 **The player is supposed to tell the parity of a number**
 [![asciicast](https://asciinema.org/a/372142.svg)](https://asciinema.org/a/372142)
