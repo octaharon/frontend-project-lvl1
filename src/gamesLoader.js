@@ -20,6 +20,9 @@ export const loadGames = async () => {
       const moduleSpecifier = url.pathToFileURL(gameModules[i]);
       try {
         const { createGame, gameName } = await import(moduleSpecifier);
+        if ((typeof gameName !== 'string') || (typeof createGame !== 'function')) {
+          throw new Error(`Module ${gameModules[i]} doesn't provide expected game interface`);
+        }
         loadGames.gamesCache.push([gameName, createGame]);
       } catch (e) {
         console.error(`Error while loading game module ${moduleSpecifier}: ${e.message}`);
