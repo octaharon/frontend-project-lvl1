@@ -19,7 +19,10 @@ export const welcome = () => message(WELCOME_MESSAGE);
  */
 const challengePlayer = async (question, correctAnswer) => {
   message(`Question: ${question}`);
-  const response = String(await prompt('Your answer: ')).toLowerCase().trim();
+  let response = '';
+  while (!response.length) {
+    response = String(await prompt('Your answer: ')).toLowerCase().trim();
+  }
   if (response === String(correctAnswer)) {
     message('Correct!');
     return true;
@@ -72,7 +75,6 @@ export const runGame = async (game, userName = null, skipGreeting = false) => {
   if (String(title).length) message(title);
   // eslint-disable-next-line no-restricted-syntax
   for (const challenge of challengeList) {
-    if (!Array.isArray(challenge) || challenge.length !== 2) throw new Error(`Malformed challenge: ${JSON.stringify(challenge)}`);
     const result = await challengePlayer(challenge[0], challenge[1]);
     if (!result) {
       message(`Let's try again, ${uName}!`);
