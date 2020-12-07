@@ -24,7 +24,7 @@ const selectOption = async (title, options) => {
   let choice = 0;
   while (choice <= 0) {
     choice = parseInt(await prompt(`Choose an option (1-${options.length}): `), 10);
-    if (!Number.isFinite(choice) || choice < 0 || choice > options.length) {
+    if (!Number.isFinite(choice) || choice <= 0 || choice > options.length) {
       message('Invalid option provided, please make another choice!');
       choice = 0;
     }
