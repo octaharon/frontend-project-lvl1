@@ -5,10 +5,10 @@
  * @property {any} 1 - option return value
  */
 
-import { loadGames } from './gamesLoader.js';
+import { loadGames } from './engine/gamesLoader.js';
 import {
   message, welcome, prompt, askName, runGame,
-} from './index.js';
+} from './engine/index.js';
 import { DEFAULT_QUESTIONS } from './settings.js';
 
 /**

@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import url from 'url';
-import { ROOT_PATH } from './settings.js';
+import { ROOT_PATH } from '../settings.js';
 
-const gamesPath = path.resolve(ROOT_PATH, 'games/');
+const gamesPath = path.resolve(ROOT_PATH, 'src', 'games/');
 /**
  * lazy load all game modules and provide their constructors
  * @return {[ChoiceOption]}

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { createGame } from '../games/even.js';
-import { runGame } from '../src/index.js';
+import { createGame } from '../src/games/even.js';
+import { runGame } from '../src/engine/index.js';
 
 runGame(createGame()).catch(console.error);

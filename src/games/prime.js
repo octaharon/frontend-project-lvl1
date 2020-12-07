@@ -1,5 +1,5 @@
-import { DEFAULT_QUESTIONS } from '../src/settings.js';
-import { generateRandomNumber } from '../src/utils.js';
+import { DEFAULT_QUESTIONS } from '../settings.js';
+import { generateRandomNumber } from '../utils.js';
 
 const DEFAULT_MAX_NUMBER = 150;
 

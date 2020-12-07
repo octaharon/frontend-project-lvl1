@@ -1,5 +1,5 @@
 import readlineSync from 'readline-sync';
-import { WELCOME_MESSAGE } from './settings.js';
+import { WELCOME_MESSAGE } from '../settings.js';
 
 export const prompt = (msg) => readlineSync.question(msg);
 

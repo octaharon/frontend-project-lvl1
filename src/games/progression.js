@@ -1,5 +1,5 @@
-import { DEFAULT_QUESTIONS } from '../src/settings.js';
-import { coinToss, generateRandomNumber } from '../src/utils.js';
+import { DEFAULT_QUESTIONS } from '../settings.js';
+import { coinToss, generateRandomNumber } from '../utils.js';
 
 const DEFAULT_MAX_FIRST_VALUE = 20;
 const MAX_DELTA = 10;
