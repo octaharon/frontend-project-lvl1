@@ -74,8 +74,8 @@ export const runGame = async (game, userName = null, skipGreeting = false) => {
   const uName = (userName !== null && typeof userName === 'string') ? userName : await askName();
   if (String(title).length) message(title);
   // eslint-disable-next-line no-restricted-syntax
-  for (const challenge of challengeList) {
-    const result = await challengePlayer(challenge[0], challenge[1]);
+  for (const [question, expectedAnswer] of challengeList) {
+    const result = await challengePlayer(question, expectedAnswer);
     if (!result) {
       message(`Let's try again, ${uName}!`);
       return false;
